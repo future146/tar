@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>المؤسسة العامة للتدريب التقني والمهني</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <img src="images.jfif" alt="شعار المؤسسة" class="logo">
+            <h1>المؤسسة العامة للتدريب التقني والمهني</h1>
+        </header>
+
+        <div class="boxes-container">
+            <div class="box">
+                <h2>تواصل معنا</h2>
+                <div class="options">
+                    <button onclick="window.location.href='whatsapp.html'">واتس رئيس القسم</button>
+                    <button onclick="window.location.href='twitter.html'">حسابنا في منصة X</button>
+                </div>
+            </div>
+
+            <div class="box">
+                <h2>الخطة الدراسية</h2>
+                <h3>اختر تخصصك:</h3>
+                <select id="specialization">
+                    <option value="">اختر التخصص</option>
+                    <option value="programming">تقنية البرمجة وتطوير الويب</option>
+                    <option value="networking">تقنية شبكات الحاسب</option>
+                    <option value="multimedia">تقنية الوسائط المتعددة </option>
+                </select>
+                <button onclick="showPlan()">عرض</button>
+            </div>
+        </div>
+
+        <div id="planContent" class="plan-content">
+            <!-- المحتوى سيتم إضافته عن طريق JavaScript -->
+        </div>
+    </div>
+    <script src="main.js"></script>
+</body>
+</html>
