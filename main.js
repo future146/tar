@@ -1,227 +1,217 @@
-function showPlan() {
-    const specialization = document.getElementById('specialization').value;
-    if (specialization) {
-        // إخفاء صندوق الخيارات
-        const boxesContainer = document.querySelector('.boxes-container');
-        boxesContainer.style.display = 'none';
+// Task management
+let tasks = JSON.parse(localStorage.getItem('tasks')) || [];
 
-        const planContent = document.getElementById('planContent');
-        
-        const plans = {
-            'programming': {
-                title: "خطة تقنية البرمجة وتطوير الويب",
-                semesters: {
-                    semester1: {
-                        title: "الفصل الأول",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["مقدمة في البرمجة", "3", "-", "تخصص", "PRG101"],
-                            ["رياضيات متقطعة", "3", "-", "تخصص", "MTH101"],
-                            ["مهارات الحاسب", "2", "-", "عام", "COM101"],
-                            ["لغة إنجليزية", "3", "-", "عام", "ENG101"],
-                            ["مهارات الاتصال", "2", "-", "عام", "CMM101"]
-                        ]
-                    },
-                    semester2: {
-                        title: "الفصل الثاني",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["برمجة الويب", "3", "PRG101", "تخصص", "WEB101"],
-                            ["قواعد البيانات", "3", "PRG101", "تخصص", "DB101"],
-                            ["البرمجة الكائنية", "3", "PRG101", "تخصص", "OOP101"],
-                            ["تطوير واجهات المستخدم", "3", "-", "تخصص", "UI101"],
-                            ["أخلاقيات المهنة", "2", "-", "عام", "ETH101"]
-                        ]
-                    },
-                    semester3: {
-                        title: "الفصل الثالث",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["تطوير تطبيقات الويب", "3", "WEB101", "تخصص", "WEB201"],
-                            ["إدارة قواعد البيانات", "3", "DB101", "تخصص", "DB201"],
-                            ["برمجة تطبيقات الموبايل", "3", "OOP101", "تخصص", "MOB101"],
-                            ["الخوارزميات", "3", "MTH101", "تخصص", "ALG101"],
-                            ["مشروع تطبيقي 1", "3", "-", "تخصص", "PRJ101"]
-                        ]
-                    },
-                    semester4: {
-                        title: "الفصل الرابع",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["تطوير خدمات الويب", "3", "WEB201", "تخصص", "WEB301"],
-                            ["أمن تطبيقات الويب", "3", "-", "تخصص", "SEC201"],
-                            ["الذكاء الاصطناعي", "3", "ALG101", "تخصص", "AI101"],
-                            ["مشروع تطبيقي 2", "3", "PRJ101", "تخصص", "PRJ201"],
-                            ["التدريب الميداني", "4", "-", "تخصص", "INT101"]
-                        ]
-                    },
-                    semester5: {
-                        title: "الفصل الخامس",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["مشروع التخرج", "6", "PRJ201", "تخصص", "PRJ301"],
-                            ["التدريب التعاوني", "12", "-", "تخصص", "INT201"],
-                            ["تطوير تطبيقات الذكاء الاصطناعي", "3", "AI101", "تخصص", "AI201"],
-                            ["الحوسبة السحابية", "3", "WEB301", "تخصص", "CLD101"],
-                            ["تحليل البيانات", "3", "DB201", "تخصص", "DAT101"]
-                        ]
-                    }
-                }
-            },
-            'networking': {
-                title: "خطة تقنية شبكات الحاسب",
-                semesters: {
-                    semester1: {
-                        title: "الفصل الأول",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["مقدمة في الشبكات", "3", "-", "تخصص", "NET101"],
-                            ["أساسيات الحاسب", "3", "-", "تخصص", "COM101"],
-                            ["مهارات الحاسب", "2", "-", "عام", "COM102"],
-                            ["لغة إنجليزية", "3", "-", "عام", "ENG101"],
-                            ["مهارات الاتصال", "2", "-", "عام", "CMM101"]
-                        ]
-                    },
-                    semester2: {
-                        title: "الفصل الثاني",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["بروتوكولات الشبكات", "3", "NET101", "تخصص", "NET102"],
-                            ["أمن الشبكات", "3", "NET101", "تخصص", "SEC101"],
-                            ["إدارة الخوادم", "3", "COM101", "تخصص", "SRV101"],
-                            ["نظم التشغيل", "3", "COM101", "تخصص", "OS101"],
-                            ["أخلاقيات المهنة", "2", "-", "عام", "ETH101"]
-                        ]
-                    },
-                    semester3: {
-                        title: "الفصل الثالث",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["الشبكات اللاسلكية", "3", "NET102", "تخصص", "NET201"],
-                            ["تصميم الشبكات", "3", "NET102", "تخصص", "NET202"],
-                            ["خدمات الشبكات", "3", "SRV101", "تخصص", "SRV201"],
-                            ["أمن المعلومات", "3", "SEC101", "تخصص", "SEC201"],
-                            ["مشروع تطبيقي 1", "3", "-", "تخصص", "PRJ101"]
-                        ]
-                    },
-                    semester4: {
-                        title: "الفصل الرابع",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["إدارة الشبكات", "3", "NET202", "تخصص", "NET301"],
-                            ["الحوسبة السحابية", "3", "SRV201", "تخصص", "CLD101"],
-                            ["تقنيات التخزين", "3", "SRV201", "تخصص", "STR101"],
-                            ["مشروع تطبيقي 2", "3", "PRJ101", "تخصص", "PRJ201"],
-                            ["التدريب الميداني", "4", "-", "تخصص", "INT101"]
-                        ]
-                    },
-                    semester5: {
-                        title: "الفصل الخامس",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["مشروع التخرج", "6", "PRJ201", "تخصص", "PRJ301"],
-                            ["التدريب التعاوني", "12", "-", "تخصص", "INT201"],
-                            ["أمن متقدم للشبكات", "3", "SEC201", "تخصص", "SEC301"],
-                            ["إدارة متقدمة للشبكات", "3", "NET301", "تخصص", "NET401"],
-                            ["تقنيات الشبكات الحديثة", "3", "NET301", "تخصص", "NET402"]
-                        ]
-                    }
-                }
-            },
-            'multimedia': {
-                title: "خطة تقنية الوسائط المتعددة ",
-                semesters: {
-                    semester1: {
-                        title: "الفصل الأول",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["مقدمة في الوسائط المتعددة", "3", "-", "تخصص", "MUL101"],
-                            ["أساسيات التصميم", "3", "-", "تخصص", "DES101"],
-                            ["مهارات الحاسب", "2", "-", "عام", "COM101"],
-                            ["لغة إنجليزية", "3", "-", "عام", "ENG101"],
-                            ["مهارات الاتصال", "2", "-", "عام", "CMM101"]
-                        ]
-                    },
-                    semester2: {
-                        title: "الفصل الثاني",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["تصميم الجرافيك", "3", "DES101", "تخصص", "GRD101"],
-                            ["تطوير الويب", "3", "MUL101", "تخصص", "WEB101"],
-                            ["معالجة الصور", "3", "DES101", "تخصص", "IMG101"],
-                            ["تصميم واجهات المستخدم", "3", "DES101", "تخصص", "UI101"],
-                            ["أخلاقيات المهنة", "2", "-", "عام", "ETH101"]
-                        ]
-                    },
-                    semester3: {
-                        title: "الفصل الثالث",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["تحريك الرسوم", "3", "GRD101", "تخصص", "ANM201"],
-                            ["تصميم مواقع الويب", "3", "WEB101", "تخصص", "WEB201"],
-                            ["إنتاج الفيديو", "3", "MUL101", "تخصص", "VID201"],
-                            ["تجربة المستخدم", "3", "UI101", "تخصص", "UX201"],
-                            ["مشروع تطبيقي 1", "3", "-", "تخصص", "PRJ101"]
-                        ]
-                    },
-                    semester4: {
-                        title: "الفصل الرابع",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["تطوير تطبيقات الويب", "3", "WEB201", "تخصص", "WEB301"],
-                            ["تصميم الألعاب", "3", "ANM201", "تخصص", "GAM301"],
-                            ["الواقع الافتراضي", "3", "ANM201", "تخصص", "VR301"],
-                            ["مشروع تطبيقي 2", "3", "PRJ101", "تخصص", "PRJ201"],
-                            ["التدريب الميداني", "4", "-", "تخصص", "INT101"]
-                        ]
-                    },
-                    semester5: {
-                        title: "الفصل الخامس",
-                        columns: ["المادة", "الساعات", "المتطلب السابق", "نوع المقرر", "الرمز"],
-                        rows: [
-                            ["مشروع التخرج", "6", "PRJ201", "تخصص", "PRJ301"],
-                            ["التدريب التعاوني", "12", "-", "تخصص", "INT201"],
-                            ["تقنيات الويب المتقدمة", "3", "WEB301", "تخصص", "WEB401"],
-                            ["الوسائط التفاعلية", "3", "VR301", "تخصص", "INT401"],
-                            ["تصميم الهوية البصرية", "3", "GRD101", "تخصص", "BRD401"]
-                        ]
-                    }
-                }
-            }
-        };
-
-        if (plans[specialization]) {
-            const plan = plans[specialization];
-            let content = `
-                <h2>${plan.title}</h2>
-                <button onclick="window.location.reload()" class="back-button">العودة للصفحة الرئيسية</button>
-            `;
-            
-            Object.values(plan.semesters).forEach(semester => {
-                content += `
-                    <div class="semester">
-                        <h3>${semester.title}</h3>
-                        <table>
-                            <thead>
-                                <tr>
-                                    ${semester.columns.map(col => `<th>${col}</th>`).join('')}
-                                </tr>
-                            </thead>
-                            <tbody>
-                                ${semester.rows.map(row => `
-                                    <tr>
-                                        ${row.map(cell => `<td>${cell}</td>`).join('')}
-                                    </tr>
-                                `).join('')}
-                            </tbody>
-                        </table>
-                    </div>
-                `;
-            });
-
-            planContent.innerHTML = content;
-        }
-    } else {
-        alert('الرجاء اختيار التخصص');
-    }
+function saveTasksToStorage() {
+    localStorage.setItem('tasks', JSON.stringify(tasks));
+    updateTaskCounts();
 }
+
+function createTask(title, startDate, endDate) {
+    return {
+        id: Date.now().toString(),
+        title,
+        startDate,
+        endDate,
+        completed: false,
+        deleted: false,
+        createdAt: new Date().toISOString()
+    };
+}
+
+function addTask(title, startDate, endDate) {
+    const task = createTask(title, startDate, endDate);
+    tasks.unshift(task); // Add to beginning of array
+    saveTasksToStorage();
+    renderTasks();
+    showToast('Task added successfully');
+}
+
+function completeTask(taskId) {
+    tasks = tasks.map(task => 
+        task.id === taskId 
+            ? { ...task, completed: true }
+            : task
+    );
+    saveTasksToStorage();
+    renderTasks();
+    showToast('Task completed!');
+}
+
+function deleteTask(taskId) {
+    tasks = tasks.map(task =>
+        task.id === taskId
+            ? { ...task, deleted: true }
+            : task
+    );
+    saveTasksToStorage();
+    renderTasks();
+    showToast('Task deleted');
+}
+
+// UI Rendering
+function formatDate(dateString) {
+    return new Date(dateString).toLocaleDateString('en-US', {
+        month: 'short',
+        day: 'numeric',
+        year: 'numeric'
+    });
+}
+
+function updateTaskCounts() {
+    const pendingCount = tasks.filter(t => !t.completed && !t.deleted).length;
+    const completedCount = tasks.filter(t => t.completed && !t.deleted).length;
+    const deletedCount = tasks.filter(t => t.deleted).length;
+
+    document.getElementById('pendingCount').textContent = pendingCount;
+    document.getElementById('completedCount').textContent = completedCount;
+    document.getElementById('deletedCount').textContent = deletedCount;
+}
+
+function showToast(message) {
+    const toast = document.createElement('div');
+    toast.className = 'toast';
+    toast.textContent = message;
+    document.body.appendChild(toast);
+
+    // Trigger reflow
+    toast.offsetHeight;
+
+    // Add visible class
+    toast.classList.add('visible');
+
+    setTimeout(() => {
+        toast.classList.remove('visible');
+        setTimeout(() => toast.remove(), 300);
+    }, 2000);
+}
+
+function createTaskElement(task) {
+    const taskElement = document.createElement('div');
+    taskElement.className = `task-item ${task.completed ? 'completed-task' : ''} ${task.deleted ? 'deleted-task' : ''}`;
+    
+    const taskInfo = document.createElement('div');
+    taskInfo.className = 'task-info';
+    
+    const title = document.createElement('div');
+    title.className = 'task-title';
+    title.textContent = task.title;
+    
+    const dates = document.createElement('div');
+    dates.className = 'task-dates';
+    dates.innerHTML = `
+        <div>From: ${formatDate(task.startDate)}</div>
+        <div>To: ${formatDate(task.endDate)}</div>
+    `;
+    
+    taskInfo.appendChild(title);
+    taskInfo.appendChild(dates);
+    taskElement.appendChild(taskInfo);
+    
+    if (!task.deleted) {
+        const actions = document.createElement('div');
+        actions.className = 'task-actions';
+        
+        if (!task.completed) {
+            const completeBtn = document.createElement('button');
+            completeBtn.className = 'task-btn complete-btn';
+            completeBtn.textContent = 'Complete';
+            completeBtn.onclick = () => completeTask(task.id);
+            actions.appendChild(completeBtn);
+        }
+        
+        const deleteBtn = document.createElement('button');
+        deleteBtn.className = 'task-btn delete-btn';
+        deleteBtn.textContent = 'Delete';
+        deleteBtn.onclick = () => deleteTask(task.id);
+        actions.appendChild(deleteBtn);
+        
+        taskElement.appendChild(actions);
+    }
+    
+    return taskElement;
+}
+
+function renderTasks() {
+    const pendingTasks = document.getElementById('pendingTasks');
+    const completedTasks = document.getElementById('completedTasks');
+    const deletedTasks = document.getElementById('deletedTasks');
+    
+    pendingTasks.innerHTML = '';
+    completedTasks.innerHTML = '';
+    deletedTasks.innerHTML = '';
+    
+    tasks.forEach(task => {
+        const taskElement = createTaskElement(task);
+        
+        if (task.deleted) {
+            deletedTasks.appendChild(taskElement);
+        } else if (task.completed) {
+            completedTasks.appendChild(taskElement);
+        } else {
+            pendingTasks.appendChild(taskElement);
+        }
+    });
+}
+
+function updateDateDisplay() {
+    const dateDisplay = document.querySelector('.date-display');
+    const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+    dateDisplay.textContent = new Date().toLocaleDateString('en-US', options);
+}
+
+// Tab Navigation
+function setupTabs() {
+    const tabButtons = document.querySelectorAll('.tab-btn');
+    const tabContents = document.querySelectorAll('.tab-content');
+    
+    tabButtons.forEach(button => {
+        button.addEventListener('click', () => {
+            const tabName = button.dataset.tab;
+            
+            tabButtons.forEach(btn => btn.classList.remove('active'));
+            tabContents.forEach(content => content.classList.remove('active'));
+            
+            button.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        });
+    });
+}
+
+// Initialize
+document.addEventListener('DOMContentLoaded', () => {
+    setupTabs();
+    renderTasks();
+    updateDateDisplay();
+    updateTaskCounts();
+    
+    const addTaskBtn = document.getElementById('addTask');
+    const taskTitleInput = document.getElementById('taskTitle');
+    const startDateInput = document.getElementById('startDate');
+    const endDateInput = document.getElementById('endDate');
+    
+    // Set default dates
+    const today = new Date().toISOString().split('T')[0];
+    const tomorrow = new Date(Date.now() + 86400000).toISOString().split('T')[0];
+    startDateInput.value = today;
+    endDateInput.value = tomorrow;
+    
+    addTaskBtn.addEventListener('click', () => {
+        const title = taskTitleInput.value.trim();
+        const startDate = startDateInput.value;
+        const endDate = endDateInput.value;
+        
+        if (title && startDate && endDate) {
+            addTask(title, startDate, endDate);
+            taskTitleInput.value = '';
+            startDateInput.value = today;
+            endDateInput.value = tomorrow;
+        }
+    });
+
+    // Add keyboard support
+    taskTitleInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            addTaskBtn.click();
+        }
+    });
+});
