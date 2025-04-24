@@ -3,42 +3,74 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المؤسسة العامة للتدريب التقني والمهني</title>
+    <title>Tasks</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <header>
-            <img src="images.jfif" alt="شعار المؤسسة" class="logo">
-            <h1>المؤسسة العامة للتدريب التقني والمهني</h1>
+    <div class="app">
+        <header class="header">
+            <h1>My Tasks</h1>
+            <div class="date-display"></div>
         </header>
 
-        <div class="boxes-container">
-            <div class="box">
-                <h2>تواصل معنا</h2>
-                <div class="options">
-                    <button onclick="window.location.href='whatsapp.html'">واتس رئيس القسم</button>
-                    <button onclick="window.location.href='twitter.html'">حسابنا في منصة X</button>
+        <main class="content-area">
+            <div id="pending" class="tab-content active">
+                <div class="task-form">
+                    <input type="text" id="taskTitle" placeholder="What needs to be done?" class="task-input">
+                    <div class="date-inputs">
+                        <div class="date-field">
+                            <label>Starts</label>
+                            <input type="date" id="startDate" class="date-input">
+                        </div>
+                        <div class="date-field">
+                            <label>Ends</label>
+                            <input type="date" id="endDate" class="date-input">
+                        </div>
+                    </div>
+                    <button id="addTask" class="add-btn">
+                        <span class="add-icon">+</span>
+                        Add Task
+                    </button>
                 </div>
+                <div class="tasks-header">
+                    <h2>Pending Tasks</h2>
+                    <span class="task-count" id="pendingCount">0</span>
+                </div>
+                <div id="pendingTasks" class="task-list"></div>
             </div>
 
-            <div class="box">
-                <h2>الخطة الدراسية</h2>
-                <h3>اختر تخصصك:</h3>
-                <select id="specialization">
-                    <option value="">اختر التخصص</option>
-                    <option value="programming">تقنية البرمجة وتطوير الويب</option>
-                    <option value="networking">تقنية شبكات الحاسب</option>
-                    <option value="multimedia">تقنية الوسائط المتعددة </option>
-                </select>
-                <button onclick="showPlan()">عرض</button>
+            <div id="completed" class="tab-content">
+                <div class="tasks-header">
+                    <h2>Completed Tasks</h2>
+                    <span class="task-count" id="completedCount">0</span>
+                </div>
+                <div id="completedTasks" class="task-list"></div>
             </div>
-        </div>
 
-        <div id="planContent" class="plan-content">
-            <!-- المحتوى سيتم إضافته عن طريق JavaScript -->
-        </div>
+            <div id="deleted" class="tab-content">
+                <div class="tasks-header">
+                    <h2>Deleted Tasks</h2>
+                    <span class="task-count" id="deletedCount">0</span>
+                </div>
+                <div id="deletedTasks" class="task-list"></div>
+            </div>
+        </main>
+
+        <nav class="bottom-tabs">
+            <button class="tab-btn active" data-tab="pending">
+                <span class="tab-icon">📋</span>
+                <span class="tab-label">doning</span>
+            </button>
+            <button class="tab-btn" data-tab="completed">
+                <span class="tab-icon">✓</span>
+                <span class="tab-label">Done</span>
+            </button>
+            <button class="tab-btn" data-tab="deleted">
+                <span class="tab-icon">🗑</span>
+                <span class="tab-label">Deleted</span>
+            </button>
+        </nav>
     </div>
-    <script src="main.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>
